@@ -1,0 +1,66 @@
+<div class="view-port">
+    <div class="container">
+        <div class="title">Form Details</div>
+        <div class="content">
+            <form [formGroup]="formdetails">
+                
+                <ng-container formArrayName="details">
+                    <ng-container *ngFor="let detailForm of details.controls; let i = index">
+                        <div [formGroupName]="i">
+                            
+                            <mat-form-field class="form-details" appearance="fill">
+                                <mat-label>Enter Question</mat-label>
+                                    <input matInput name="question" type="text" formControlName="question">
+                                        <mat-error *ngIf="detailForm.get('question')?.hasError('required')">
+                                            Question is <strong>required</strong>...
+                                        </mat-error>
+                            </mat-form-field><pre></pre>
+
+                            <mat-form-field class="form-details" appearance="fill">
+                                <mat-label>Answer Type</mat-label>
+                                <mat-select name="answer_type" formControlName="answer_type">
+                                    <mat-option *ngFor="let type of types" [value]="type.id">{{type.Value}}</mat-option>
+                                </mat-select>
+                                    <mat-error *ngIf="detailForm.get('answer_type')?.hasError('required')">
+                                        answer Type is <strong>required</strong>...
+                                    </mat-error>
+                            </mat-form-field><pre></pre>
+
+                            <div *ngIf="detailForm.get('answer_type')?.value === 3">
+                                <mat-form-field class="form-details" appearance="fill">
+                                    <mat-label>Answer 1</mat-label>
+                                        <input matInput name="answer1" type="text" formControlName="answer1">
+                                            <mat-error *ngIf="detailForm.get('answer1')?.hasError('required')">
+                                                Answer1 is <strong>required</strong>...
+                                            </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="form-details" appearance="fill">
+                                    <mat-label>Answer 2</mat-label>
+                                        <input matInput name="answer2" type="text" formControlName="answer2">                                    
+                                            <mat-error *ngIf="detailForm.get('answer2')?.hasError('required')">
+                                                Answer2 is <strong>required</strong>...
+                                            </mat-error>                                        
+                                </mat-form-field>
+                            </div><pre></pre>
+
+                            <div class="example-button-row">
+                                <mat-icon (click)="deleteDetail(i)" color="warn">delete</mat-icon>
+                            </div>
+                            
+                        </div>
+                    </ng-container>
+                </ng-container>
+
+                <button mat-raised-button (click)="addDetail()" color="primary">
+                    <mat-icon aria-hidden="false">add</mat-icon><h3>Add more Question</h3>
+                </button><pre></pre>
+
+                <div class="example-button-row">
+                    <button mat-raised-button [disabled]>Reset</button>
+                    <button mat-raised-button type="submit" (click)="onSubmit()" color="primary">Submit</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
