@@ -4,7 +4,7 @@
         <div class="content">
             <form [formGroup]="formdetails">
                 
-                <ng-container formArrayName="details">
+                <ng-container formArrayName="details" class="user-data">
                     <ng-container *ngFor="let detailForm of details.controls; let i = index">
                         <div [formGroupName]="i">
                             
@@ -41,23 +41,25 @@
                                                 Answer2 is <strong>required</strong>...
                                             </mat-error>                                        
                                 </mat-form-field>
-                            </div><pre></pre>
-
-                            <div class="example-button-row">
-                                <mat-icon (click)="deleteDetail(i)" color="warn">delete</mat-icon>
                             </div>
+
+                            <div class="button_delete">
+                                <button mat-raised-button>
+                                    <mat-icon (click)="deleteDetail(i)" color="warn">delete</mat-icon>
+                                </button>
+                            </div> 
                             
                         </div>
                     </ng-container>
                 </ng-container>
 
-                <button mat-raised-button (click)="addDetail()" color="primary">
-                    <mat-icon aria-hidden="false">add</mat-icon><h3>Add more Question</h3>
-                </button><pre></pre>
+                <div class="example-button-row">
+                    <button mat-raised-button type="button" (click)="reset()">Reset</button>
+                    <button mat-raised-button type="submit" (click)="onSubmit()" color="primary">Submit</button>
+                </div>
 
                 <div class="example-button-row">
-                    <button mat-raised-button [disabled]>Reset</button>
-                    <button mat-raised-button type="submit" (click)="onSubmit()" color="primary">Submit</button>
+                    <button mat-raised-button color="accent" (click)="addDetail()"><mat-icon>add</mat-icon> More Question</button>
                 </div>
 
             </form>

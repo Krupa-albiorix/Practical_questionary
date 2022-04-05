@@ -5,11 +5,10 @@
 }
 
 .view-port {
-    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
+    padding: 20px;
     background-color: linear-gradient(135deg, #71b7e6, #9b59b6);
 }
 
@@ -23,7 +22,8 @@
 }
 
 .container .title {
-    font-size: 30px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 35px;
     font-weight: 50px;
     text-align: center;
     position: relative;
@@ -31,9 +31,9 @@
 }
 
 .content .user-details {
-    margin-top: 50px;
+    // margin-top: 50px;
     align-items: center;
-    // display: flex;
+    display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     margin: 40px 0 12px 0;
@@ -42,41 +42,27 @@
 .example-full-width {
     display:inline;
     font-size: x-large;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     width: auto;
 }
 
 .form-details {
-    display:inline;
-    font-size: x-large;
-    margin-bottom: 5px;
-    width: auto;
-}
-
-input {
-    width: 80%;
-    height: 40px;
-    background-color: lightgrey;
-    border: 0px;
-}
-
-textarea {
-    width: 80%;
-    height: 70px;
-    background-color: lightgrey;
-    border: 0px;
+    padding-left: 40px;
+    position: relative;
+    // margin-bottom: 10px;
+    font-size: larger;
+    width: 90%;
 }
 
 mat-label {
     margin-left: 40px;
     width: 80%;
-    height: 40px;
-    border: 0px;
 }
 
 button {
     size: 15px;
     bottom: 20px;
     width: auto;
-    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }

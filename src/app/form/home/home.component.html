@@ -1,46 +1,43 @@
 <div class="view-port">
     <div class="container">
-        <div class="title">Create Form & fill Details</div>
+        <div class="title">Create Form & Fill Details</div>
             <div class="content">
 
-                <button *ngIf="!data" color="primary" [routerLink]="['/formdetails/add']"><mat-icon>person_add</mat-icon> Add Data</button>
-                <button *ngIf="data" mat-raised-button color="warn" [routerLink]="['/formdetails/edit']"><mat-icon>edit</mat-icon> Edit Data</button>
+                <button *ngIf="!data" mat-raised-button color="primary" [routerLink]="['/formdetails/add']"><mat-icon>person_add</mat-icon> Add Form</button>
+                <button *ngIf="data" mat-raised-button color="warn" [routerLink]="['/formdetails/edit']"><mat-icon>edit</mat-icon> Edit Form</button>
 
                 <!-- {{data | json}} -->
                 
                     <div class="user-details" *ngFor="let datas of data?.details">
 
                         <div class="example-full-width">
-                            <mat-label>Question:  </mat-label>
+                            <mat-label>Question:&nbsp;</mat-label>
                             {{ datas?.question }}
                         </div><br>
 
                         <div *ngIf="datas?.answer_type === 3" class="form-details">
-                            <mat-label>Answer:</mat-label>
+                            <mat-label>Answer:</mat-label>&nbsp;
                             <mat-radio-group>
-                                    <mat-radio-button value="answer1">{{ datas?.answer1 }}</mat-radio-button>
+                                    <mat-radio-button value="answer1">{{ datas?.answer1 }}</mat-radio-button>&nbsp;&nbsp;
                                     <mat-radio-button value="answer2">{{ datas?.answer2 }}</mat-radio-button>
                             </mat-radio-group>
                         </div><br>
 
                         <div *ngIf="datas?.answer_type === 1" class="form-details">
-                            <mat-label>Answer:</mat-label>
-                                <input matInput name="short_answer" type="text">
+                            <mat-form-field appearance="fill" [style.width.px]=1300>
+                                <mat-label>Answer:</mat-label>&nbsp;
+                                    <input matInput name="short_answer" type="text">
+                            </mat-form-field>
                         </div><br>
 
                         <div *ngIf="datas?.answer_type === 2" class="form-details">
-                            <mat-label>Answer:</mat-label>
-                            <textarea matInput name="long_answer" type="text"></textarea>
+                            <mat-form-field appearance="fill" [style.width.px]=1300>
+                                <mat-label>Answer:</mat-label>&nbsp;
+                                    <textarea matInput name="long_answer" type="text"></textarea>
+                            </mat-form-field>
                         </div><br>
 
                     </div><pre></pre>
-
-                
-
-                
-                <!-- {{data}}
-
-                {{dataSource[0]}} -->
             </div>
     </div>
 </div>
