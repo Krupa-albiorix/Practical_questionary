@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormArray, AbstractControl, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-// import { ConfirmedValidator } from '../Validator/confirmed.validator';
 
 interface Type {
   id: number;
@@ -14,14 +13,13 @@ interface Type {
   styleUrls: ['./formdetails.component.scss']
 })
 export class FormdetailsComponent implements OnInit {
-  formdetails!: any;
 
+  formdetails!: any;
   detailForm!: any;
   mode: any;
   user: any = {};
   FORM_CONSTANT = 'form_data';
-  answer1: any;
-  answer2: any;
+  answerForm!: any;
 
   constructor(private formBuilder: FormBuilder, private route1: Router, private route: ActivatedRoute) {
     this.formdetails = this.formBuilder.group({
@@ -35,7 +33,6 @@ export class FormdetailsComponent implements OnInit {
       }
       else {
         this.addDetail();
-
       }
     })
   }
@@ -46,12 +43,11 @@ export class FormdetailsComponent implements OnInit {
     if (users) {
       this.formdetails.patchValue(users);
       this.patchform();
+
     }
   }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
   get details() {
     return this.formdetails.controls["details"] as FormArray;
@@ -66,45 +62,80 @@ export class FormdetailsComponent implements OnInit {
         this.detailForm = this.formBuilder.group({
           question: [element.question, [Validators.required]],
           answer_type: [element.answer_type, [Validators.required]],
-          answer1: [element.answer1],
-          answer2: [element.answer2]
+          answers: this.formBuilder.array([])
         });
-      this.details.push(this.detailForm);
+        this.details.push(this.detailForm);
+        this.patchradio();
       }
     }
-
   }
 
   addDetail() {
-      this.detailForm = this.formBuilder.group({
-        question: ['', [Validators.required]],
-        answer_type: ['', [Validators.required]],
-        answer1: [''],
-        answer2: ['']
-      });
-      this.details.push(this.detailForm);
-  
-
-    this.detailForm.get('answer_type').valueChanges.subscribe( (id: number) => {
-      if (id === 3) {
-        this.detailForm.get('answer1').setValidators([Validators.required]);
-        this.detailForm.get('answer2').setValidators([Validators.required]);
-      } else {
-        this.detailForm.get('answer1').setValidators(null);
-        this.detailForm.get('answer2').setValidators(null);
-      }
-      this.detailForm.get('answer1').updateValueAndValidity();
-      this.detailForm.get('answer2').updateValueAndValidity();
+    console.log(this.details)
+    this.detailForm = this.formBuilder.group({
+      question: ['', [Validators.required]],
+      answer_type: ['', [Validators.required]],
+      answers: this.formBuilder.array([])
     });
-
+    this.addAnswer();
+    this.addAnswer();
+    this.details.push(this.detailForm);
+    //   this.detailForm.get('answer_type').valueChanges.subscribe( (id: number) => {
+    //     if (id === 3) {
+    //       this.detailForm.get('answer1').setValidators([Validators.required]);
+    //     } else {
+    //       this.detailForm.get('answer1').setValidators(null);
+    //     }
+    //     this.detailForm.get('answer1').updateValueAndValidity();
+    // });
   }
 
+  get answers() {
+    // console.log('this.detailForm: ', this.detailForm);
+    return this.detailForm.controls["answers"] as FormArray;
+  }
+
+  patchradio() {
+    const user = JSON.parse(localStorage.getItem(this.FORM_CONSTANT)!);
+    console.log('user: ', user);
+    if (user.details?.answers?.length) {
+      for (let index = 0; index < user.details.answers.length; index++) {
+        const elements = user.details.answers[index];
+        console.log('elements: ', elements);
+        this.answerForm = this.formBuilder.group({
+          radio1: [elements.radio1]
+        });
+        this.answers.push(this.answerForm);
+      }
+    }
+  }
+
+  addAnswer() {
+    console.log(this.answers, 'answer')
+    this.answerForm = this.formBuilder.group({
+      radio1: ['']
+    });
+    this.answers.push(this.answerForm);
+    // this.detailForm.get('answer_type').valueChanges.subscribe( (id: number) => {
+    //     if (id === 3) {
+    //     this.answerForm.get('radio1').setValidators([Validators.required]);
+    //   } else {
+    //     this.answerForm.get('radio1').setValidators(null);
+    //   }
+    //   this.detailForm.get('radio1').updateValueAndValidity();
+    // });
+  }
+
+  deleteAnswer(answerIndex: number) {
+    this.answers.removeAt(answerIndex);
+  }
 
   deleteDetail(detailIndex: number) {
     this.details.removeAt(detailIndex);
   }
 
   onSubmit() {
+    console.log(this.formdetails)
     if (this.formdetails.valid) {
       if (localStorage.getItem(this.FORM_CONSTANT)) {
         localStorage.removeItem(this.FORM_CONSTANT);

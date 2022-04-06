@@ -7,8 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatComponentsModule } from '../mat-components.module';
 import { FormRoutingModule } from './form-routing.module';
 
-
-
 @NgModule({
   declarations: [
     FormComponent,

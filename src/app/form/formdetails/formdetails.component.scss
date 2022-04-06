@@ -44,7 +44,6 @@
 }
 
 button {
-    margin-right: 0;
     width: auto;
     margin: 5px;
 }
@@ -54,8 +53,14 @@ button {
     max-width: 1500px;
     width: 100%;
     background-color: #fff;
-    padding: 10px 30px;
+    padding: 5px 30px;
     border-radius: 5px;
     display: table-cell;
-    width: 500px;
+}
+
+.example-button-col {
+    margin-left: 500px;
+    background-color: #fff;
+    padding: 5px 30px;
+    border-radius: 5px;
 }

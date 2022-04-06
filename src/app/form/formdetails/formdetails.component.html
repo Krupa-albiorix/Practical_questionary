@@ -27,20 +27,31 @@
                             </mat-form-field><pre></pre>
 
                             <div *ngIf="detailForm.get('answer_type')?.value === 3">
-                                <mat-form-field class="form-details" appearance="fill">
-                                    <mat-label>Answer 1</mat-label>
-                                        <input matInput name="answer1" type="text" formControlName="answer1">
-                                            <mat-error *ngIf="detailForm.get('answer1')?.hasError('required')">
-                                                Answer1 is <strong>required</strong>...
-                                            </mat-error>
-                                </mat-form-field>
-                                <mat-form-field class="form-details" appearance="fill">
-                                    <mat-label>Answer 2</mat-label>
-                                        <input matInput name="answer2" type="text" formControlName="answer2">                                    
-                                            <mat-error *ngIf="detailForm.get('answer2')?.hasError('required')">
-                                                Answer2 is <strong>required</strong>...
-                                            </mat-error>                                        
-                                </mat-form-field>
+                              
+                                <ng-container formArrayName="answers" class="user-data">
+                                    <ng-container *ngFor="let answerForm of answers.controls; let j = index">
+                                        <div [formGroupName]="j">
+                                            <mat-form-field class="form-details" appearance="fill">
+                                                <mat-label>Answer {{j}}</mat-label>
+                                                    <input matInput name="answer2" type="text" formControlName="radio1">                                    
+                                                        <mat-error *ngIf="answerForm.get('radio1')?.hasError('required')">
+                                                            Answer is <strong>required</strong>...
+                                                        </mat-error>                                        
+                                            </mat-form-field>
+
+                                            <div class="button_delete">
+                                                <button mat-raised-button>
+                                                    <mat-icon (click)="deleteAnswer(j)" color="warn">delete</mat-icon>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </ng-container>
+                                </ng-container>
+
+                                <div class="example-button-col">
+                                    <button mat-raised-button color="accent" (click)="addAnswer()"><mat-icon>add</mat-icon></button>
+                                </div>
                             </div>
 
                             <div class="button_delete">
@@ -53,13 +64,13 @@
                     </ng-container>
                 </ng-container>
 
-                <div class="example-button-row">
-                    <button mat-raised-button type="button" (click)="reset()">Reset</button>
-                    <button mat-raised-button type="submit" (click)="onSubmit()" color="primary">Submit</button>
+                <div class="example-button-col">
+                    <button mat-raised-button color="accent" (click)="addDetail()"><mat-icon>add</mat-icon> More Question</button>
                 </div>
 
                 <div class="example-button-row">
-                    <button mat-raised-button color="accent" (click)="addDetail()"><mat-icon>add</mat-icon> More Question</button>
+                    <button mat-raised-button type="button" (click)="reset()">Reset</button>
+                    <button mat-raised-button type="submit" (click)="onSubmit()" color="primary">Submit</button>
                 </div>
 
             </form>
