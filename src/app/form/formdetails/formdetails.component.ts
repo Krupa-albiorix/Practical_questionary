@@ -1,3 +1,4 @@
+import { FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -65,7 +66,19 @@ export class FormdetailsComponent implements OnInit {
           answers: this.formBuilder.array([])
         });
         this.details.push(this.detailForm);
-        this.patchradio();
+        if (element.answers.length) {
+          for (let jindex = 0; jindex < element.answers.length; jindex++) {
+            const jelement = element.answers[jindex];
+            let fg = this.formBuilder.group({
+              radio1: [jelement.radio1],
+            });
+            (<FormArray>(<FormGroup>(<FormArray>this.formdetails.controls['details'])
+              .controls[index]).controls['answers']).push(fg);
+
+          }
+        }
+
+        // this.patchradio();
       }
     }
   }
