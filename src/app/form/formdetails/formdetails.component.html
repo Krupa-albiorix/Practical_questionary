@@ -29,7 +29,7 @@
                             <div *ngIf="detailForm.get('answer_type')?.value === 3">
                               
                                 <ng-container formArrayName="answers" class="user-data">
-                                    <ng-container *ngFor="let answerForm of answers.controls; let j = index">
+                                    <ng-container *ngFor="let answerForm of answers(i).controls; let j = index">
                                         <div [formGroupName]="j">
                                             <mat-form-field class="form-details" appearance="fill">
                                                 <mat-label>Answer {{j}}</mat-label>
@@ -40,8 +40,8 @@
                                             </mat-form-field>
 
                                             <div class="button_delete">
-                                                <button mat-raised-button>
-                                                    <mat-icon (click)="deleteAnswer(j)" color="warn">delete</mat-icon>
+                                                <button mat-raised-button *ngIf="answers(i).controls.length > 2"  (click)="deleteAnswer(i,j)">
+                                                    <mat-icon color="warn">delete</mat-icon>
                                                 </button>
                                             </div>
 
@@ -50,13 +50,13 @@
                                 </ng-container>
 
                                 <div class="example-button-col">
-                                    <button mat-raised-button color="accent" (click)="addAnswer()"><mat-icon>add</mat-icon></button>
+                                    <button mat-raised-button color="accent" (click)="addAnswer(i)"><mat-icon>add</mat-icon></button>
                                 </div>
                             </div>
 
                             <div class="button_delete">
-                                <button mat-raised-button>
-                                    <mat-icon (click)="deleteDetail(i)" color="warn">delete</mat-icon>
+                                <button mat-raised-button *ngIf="details.controls.length > 1" (click)="deleteDetail(i)">
+                                    <mat-icon color="warn">delete</mat-icon>
                                 </button>
                             </div> 
                             

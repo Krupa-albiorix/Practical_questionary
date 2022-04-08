@@ -74,11 +74,8 @@ export class FormdetailsComponent implements OnInit {
             });
             (<FormArray>(<FormGroup>(<FormArray>this.formdetails.controls['details'])
               .controls[index]).controls['answers']).push(fg);
-
           }
         }
-
-        // this.patchradio();
       }
     }
   }
@@ -90,61 +87,29 @@ export class FormdetailsComponent implements OnInit {
       answer_type: ['', [Validators.required]],
       answers: this.formBuilder.array([])
     });
-    this.addAnswer();
-    this.addAnswer();
     this.details.push(this.detailForm);
-    //   this.detailForm.get('answer_type').valueChanges.subscribe( (id: number) => {
-    //     if (id === 3) {
-    //       this.detailForm.get('answer1').setValidators([Validators.required]);
-    //     } else {
-    //       this.detailForm.get('answer1').setValidators(null);
-    //     }
-    //     this.detailForm.get('answer1').updateValueAndValidity();
-    // });
   }
 
-  get answers() {
-    // console.log('this.detailForm: ', this.detailForm);
-    return this.detailForm.controls["answers"] as FormArray;
+  answers(detailIndex: number) {
+    return this.details
+      .at(detailIndex)
+      .get("answers") as FormArray;
   }
 
-  patchradio() {
-    const user = JSON.parse(localStorage.getItem(this.FORM_CONSTANT)!);
-    console.log('user: ', user);
-    if (user.details?.answers?.length) {
-      for (let index = 0; index < user.details.answers.length; index++) {
-        const elements = user.details.answers[index];
-        console.log('elements: ', elements);
-        this.answerForm = this.formBuilder.group({
-          radio1: [elements.radio1]
-        });
-        this.answers.push(this.answerForm);
-      }
-    }
-  }
-
-  addAnswer() {
+  addAnswer(detailIndex: number, radio1? : any) {
     console.log(this.answers, 'answer')
     this.answerForm = this.formBuilder.group({
       radio1: ['']
     });
-    this.answers.push(this.answerForm);
-    // this.detailForm.get('answer_type').valueChanges.subscribe( (id: number) => {
-    //     if (id === 3) {
-    //     this.answerForm.get('radio1').setValidators([Validators.required]);
-    //   } else {
-    //     this.answerForm.get('radio1').setValidators(null);
-    //   }
-    //   this.detailForm.get('radio1').updateValueAndValidity();
-    // });
+    this.answers(detailIndex).push(this.answerForm);
   }
 
-  deleteAnswer(answerIndex: number) {
-    this.answers.removeAt(answerIndex);
+  deleteAnswer(detailIndex: number, answerIndex: number) {
+    this.answers(detailIndex).removeAt(answerIndex);
   }
 
   deleteDetail(detailIndex: number) {
-    this.details.removeAt(detailIndex);
+    (<FormArray>this.formdetails.get('details')).removeAt(detailIndex);
   }
 
   onSubmit() {
@@ -168,3 +133,7 @@ export class FormdetailsComponent implements OnInit {
     { id: 3, Value: 'Radio Button' }
   ];
 }
+function i(i: any) {
+  throw new Error('Function not implemented.');
+}
+
